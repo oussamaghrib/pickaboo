@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/pick-up-lines",
+      "handler": "pick-up-line.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/pick-up-lines/count",
+      "handler": "pick-up-line.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/pick-up-lines/:id",
+      "handler": "pick-up-line.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/pick-up-lines",
+      "handler": "pick-up-line.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/pick-up-lines/:id",
+      "handler": "pick-up-line.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/pick-up-lines/:id",
+      "handler": "pick-up-line.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

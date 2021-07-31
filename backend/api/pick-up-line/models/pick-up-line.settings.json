@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pick_up_lines",
+  "info": {
+    "name": "pickUpLine"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "line": {
+      "type": "richtext"
+    },
+    "rating": {
+      "type": "integer",
+      "default": 0,
+      "min": 0,
+      "max": 100
+    },
+    "users_permissions_user": {
+      "via": "pick_up_lines",
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "categories": {
+      "via": "pick_up_lines",
+      "collection": "category"
+    }
+  }
+}
