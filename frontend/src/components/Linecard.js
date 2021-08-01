@@ -98,7 +98,7 @@ export default function LineCard(props) {
                 <ThumbDownIcon />
               </IconButton>
             </Grid>
-            <Grid item>
+            <Grid item >
               <Rating rating={props.line.rating} />
             </Grid>
           </Grid>
