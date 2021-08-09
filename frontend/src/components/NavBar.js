@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ButtonAppBar() {
 
   const [open, setOpen] = React.useState(false);
-  const [user, setUser] = React.useState(null)
+  const [user, setUser] = React.useState(null || localStorage.getItem("loggedInUser"))
   const [userName, setUserName] = React.useState('');
   const [password, setPassword] = React.useState('')
 
@@ -56,7 +56,7 @@ export default function ButtonAppBar() {
     try {
 
       const userData = await loginService.login(creds)
-
+      localStorage.setItem("loggedInUser", userData)
       setUser(userData)
 
     } catch (e) {
