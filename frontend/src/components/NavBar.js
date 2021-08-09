@@ -27,6 +27,9 @@ const useStyles = makeStyles((theme) => ({
 export default function ButtonAppBar() {
 
   const [open, setOpen] = React.useState(false);
+  const [user, setUser] = React.useState(null)
+  const [userName, setUserName] = React.useState('');
+  const [password, setPassword] = React.useState('')
 
   const classes = useStyles();
 
@@ -43,35 +46,65 @@ export default function ButtonAppBar() {
   const handelLogin = async (e) => {
     e.preventDefault()
 
+
+
     const creds = {
-      "identifier": "basta@sybinmail.com",
-      "password": "pppoooiii123"
+      "identifier": userName,
+      "password": password
     }
 
-    const user = await loginService.login(creds)
+    try {
 
-    console.log(user)
+      const userData = await loginService.login(creds)
+
+      setUser(userData)
+
+    } catch (e) {
+      console.log(e)
+    }
+
+  }
+  const handleUserNameChange = (e) => {
+    setUserName(e.target.value)
   }
 
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value)
+  }
+
+  if (user == null) {
+
+    return (
+      <div className={classes.root}>
+        <AppBar position="fixed">
+          <Toolbar>
+            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" className={classes.title}>
+              Pickaboo
+            </Typography>
+            {/* open the modal when clicking on login or signup*/}
+            <Button color="inherit" onClick={handleOpen}>Login</Button>
+
+            <Button color="inherit">Signup</Button>
+          </Toolbar>
+        </AppBar>
+        <LoginModal onClose={handleClose} handelLogin={handelLogin} handleUserNameChange={handleUserNameChange} handlePasswordChange={handlePasswordChange} open={open} />
+      </div>
+    );
+  }
 
   return (
     <div className={classes.root}>
       <AppBar position="fixed">
-        <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            Pickaboo
-          </Typography>
-          {/* open the modal when clicking on login or signup*/}
-          <Button color="inherit" onClick={handleOpen}>Login</Button>
-
-          <Button color="inherit">Signup</Button>
-        </Toolbar>
+        <Typography variant="h6" className={classes.title}>
+          Pickaboo
+        </Typography>
+        <Typography variant="h6"> welcome back {userName}</Typography>
       </AppBar>
-      <LoginModal onClose={handleClose} handelLogin={handelLogin} open={open} />
     </div>
-  );
+
+  )
 }
 
