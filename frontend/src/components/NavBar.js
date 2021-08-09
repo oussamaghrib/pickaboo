@@ -27,9 +27,17 @@ const useStyles = makeStyles((theme) => ({
 export default function ButtonAppBar() {
 
   const [open, setOpen] = React.useState(false);
-  const [user, setUser] = React.useState(null || localStorage.getItem("loggedInUser"))
+  const [user, setUser] = React.useState(null)
   const [userName, setUserName] = React.useState('');
   const [password, setPassword] = React.useState('')
+
+React.useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedInUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
+    }
+  }, [])
 
   const classes = useStyles();
 
@@ -56,7 +64,8 @@ export default function ButtonAppBar() {
     try {
 
       const userData = await loginService.login(creds)
-      localStorage.setItem("loggedInUser", userData)
+      console.log(userData)
+      localStorage.setItem("loggedInUser", JSON.stringify(userData))
       setUser(userData)
 
     } catch (e) {
@@ -71,7 +80,6 @@ export default function ButtonAppBar() {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value)
   }
-
   if (user == null) {
 
     return (
@@ -101,7 +109,7 @@ export default function ButtonAppBar() {
         <Typography variant="h6" className={classes.title}>
           Pickaboo
         </Typography>
-        <Typography variant="h6"> welcome back {userName}</Typography>
+        <Typography variant="h6"> welcome back {user.user.username} </Typography>
       </AppBar>
     </div>
 
