@@ -23,10 +23,10 @@ export default function LineCards(props) {
         className="my-masonry-grid"
         columnClassName="my-masonry-grid_column">
         {
-          props.lines.map((line, index) => {
+          props.lines.map((line) => {
             return (
-              <div>
-                <LineCard line={line} key={index}></LineCard>
+              <div key={line.id}>
+                <LineCard line={line} ></LineCard>
               </div>
             )
           })

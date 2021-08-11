@@ -14,6 +14,7 @@ import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Rating from './Rating'
 
@@ -38,6 +39,9 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     backgroundColor: red[500],
   },
+  category: {
+    textTransform: "none",
+  }
 }));
 
 export default function LineCard(props) {
@@ -87,6 +91,10 @@ export default function LineCard(props) {
           <Typography paragraph>
             {props.line.lineBody}
           </Typography>
+          <div>{props.line.categories.map((category, index) => {
+
+            return <Button className={classes.category} key={index} variant="outlined" color="primary">{category}</Button>
+          })}</div>
         </CardContent>
         <CardActions>
           <Grid container spacing={10}>

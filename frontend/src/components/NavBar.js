@@ -8,8 +8,9 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Avatar from '@material-ui/core/Avatar';
 import LoginModal from './LoginModal'
+import ProfileAvatarMenu from './ProfileAvatarMenu'
 import loginService from '../services/login'
-
+import UserService from '../services/user'
 
 
 
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   username: {
-    flexGrow: 1
+    flexGrow: 1,
   }
 }));
 
@@ -40,7 +41,6 @@ export default function NavBar(props) {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
-      console.log(user)
     }
   }, [])
 
@@ -92,6 +92,12 @@ export default function NavBar(props) {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value)
   }
+
+  const goToProfile = async (e) => {
+    const data = await UserService.getUserPosts(user.user._id, user.jwt)
+    console.log(data)
+  }
+
   if (user == null) {
 
     return (
@@ -119,14 +125,11 @@ export default function NavBar(props) {
     <div className={classes.root}>
       <AppBar position="fixed">
         <Toolbar>
-          <Typography variant="h7" className={classes.title}>
+          <Typography variant="h6" className={classes.title}>
             Pickaboo
           </Typography>
           <div className={classes.username}>
-
-            <Avatar alt={user.user.username} src={props.rootUrl + user.user.profilePicture.formats.thumbnail.url} />
-
-            <Typography >  {user.user.username} </Typography>
+            <ProfileAvatarMenu user={user} goToProfile={goToProfile} rootUrl={props.rootUrl} />
           </div>
           <Button color="inherit" onClick={handleLogout}>Logout</Button>
         </Toolbar>
