@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import Avatar from '@material-ui/core/Avatar';
 import LoginModal from './LoginModal'
 import loginService from '../services/login'
 
@@ -22,20 +23,24 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  username: {
+    flexGrow: 1
+  }
 }));
 
-export default function ButtonAppBar() {
+export default function NavBar(props) {
 
   const [open, setOpen] = React.useState(false);
   const [user, setUser] = React.useState(null)
   const [userName, setUserName] = React.useState('');
   const [password, setPassword] = React.useState('')
 
-React.useEffect(() => {
+  React.useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedInUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
+      console.log(user)
     }
   }, [])
 
@@ -73,6 +78,13 @@ React.useEffect(() => {
     }
 
   }
+
+  const handleLogout = async (e) => {
+    localStorage.removeItem("loggedInUser")
+    setUser(null)
+    handleClose()
+  }
+
   const handleUserNameChange = (e) => {
     setUserName(e.target.value)
   }
@@ -89,7 +101,7 @@ React.useEffect(() => {
             <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" className={classes.title}>
+            <Typography className={classes.title}>
               Pickaboo
             </Typography>
             {/* open the modal when clicking on login or signup*/}
@@ -106,10 +118,18 @@ React.useEffect(() => {
   return (
     <div className={classes.root}>
       <AppBar position="fixed">
-        <Typography variant="h6" className={classes.title}>
-          Pickaboo
-        </Typography>
-        <Typography variant="h6"> welcome back {user.user.username} </Typography>
+        <Toolbar>
+          <Typography variant="h7" className={classes.title}>
+            Pickaboo
+          </Typography>
+          <div className={classes.username}>
+
+            <Avatar alt={user.user.username} src={props.rootUrl + user.user.profilePicture.formats.thumbnail.url} />
+
+            <Typography >  {user.user.username} </Typography>
+          </div>
+          <Button color="inherit" onClick={handleLogout}>Logout</Button>
+        </Toolbar>
       </AppBar>
     </div>
 

@@ -47,7 +47,7 @@ function App() {
     <div>
       {/* because i couldn't a sticky navbar, i used fixed with margin of 10*/}
       <Box m={10}>
-        <NavBar />
+        <NavBar rootUrl={root}/>
       </Box>
       <LineCards lines={linesFromApi} />
     </div >
