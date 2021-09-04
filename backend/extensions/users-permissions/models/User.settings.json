@@ -72,6 +72,9 @@
       "plugin": "upload",
       "required": false,
       "pluginOptions": {}
+    },
+    "profileSVG": {
+      "type": "string"
     }
   }
 }

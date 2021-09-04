@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
-import LoginForm from "./LoginForm";
+import SignupForm from "./SignupForm";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -19,10 +19,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LoginModal(props) {
+export default function SignupModal(props) {
   const classes = useStyles();
 
-  const handelLogin = props.handelLogin;
+  const handelSignup = props.handelSignup;
   return (
     <Modal
       aria-labelledby="transition-modal-title"
@@ -37,8 +37,9 @@ export default function LoginModal(props) {
       }}
     >
       <Fade in={props.open}>
-        <LoginForm
-          handelLogin={handelLogin}
+        <SignupForm
+          handelSignup={handelSignup}
+          handleEmailChange={props.handleEmailChange}
           handleUserNameChange={props.handleUserNameChange}
           handlePasswordChange={props.handlePasswordChange}
         />

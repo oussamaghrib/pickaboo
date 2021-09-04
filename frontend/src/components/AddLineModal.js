@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
-import LoginForm from "./LoginForm";
+import AddLineForm from "./AddLineForm";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -37,7 +37,7 @@ export default function LoginModal(props) {
       }}
     >
       <Fade in={props.open}>
-        <LoginForm
+        <AddLineForm
           handelLogin={handelLogin}
           handleUserNameChange={props.handleUserNameChange}
           handlePasswordChange={props.handlePasswordChange}

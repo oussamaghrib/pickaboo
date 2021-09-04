@@ -25,6 +25,7 @@ function App() {
     const rating = line.rating
     const categories = line.categories.map((category, index) => category.categoryName)
     const id = line._id
+    const profileSVG = line.users_permissions_user.profileSVG
     return {
       profileImage,
       userName,
@@ -32,14 +33,18 @@ function App() {
       lineBody,
       rating,
       categories,
-      id
+      id,
+      profileSVG
     }
-
   })
+
+  console.log(linesFromApi)
+
   useEffect(() => {
     axios.get(URL).then((res) => {
       setAPIdata(res.data)
     })
+    
 
 
   }, [])

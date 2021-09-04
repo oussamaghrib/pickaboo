@@ -1,0 +1,24 @@
+<CardContent>
+          <Typography paragraph>
+            {props.line.lineBody}
+          </Typography>
+          <div>{props.line.categories.map((category, index) => {
+
+            return <Button className={classes.category} key={index} variant="outlined" color="primary">{category}</Button>
+          })}</div>
+        </CardContent>
+        <CardActions>
+          <Grid container spacing={10}>
+            <Grid item>
+              <IconButton aria-label="like the line">
+                <ThumbUpIcon />
+              </IconButton>
+              <IconButton aria-label="dislike the line">
+                <ThumbDownIcon />
+              </IconButton>
+            </Grid>
+            <Grid item >
+              <Rating rating={props.line.rating} />
+            </Grid>
+          </Grid>
+        </CardActions>
