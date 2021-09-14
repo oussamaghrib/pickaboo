@@ -50,11 +50,11 @@ export default function SimpleMenu(props) {
           alt={props.user.user.username}
           onClick={props.goToProfile}
         >
-          <div
+          <svg
             dangerouslySetInnerHTML={{
               __html: `${props.user.user.profileSVG}`,
             }}
-          ></div>
+          ></svg>
         </Avatar>
       </Button>
       <Menu

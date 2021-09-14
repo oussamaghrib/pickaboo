@@ -57,9 +57,9 @@ export default function LineCard(props) {
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            <div
+            <svg
               dangerouslySetInnerHTML={{ __html: `${props.line.profileSVG}` }}
-            ></div>
+            ></svg>
           </Avatar>
         }
         action={
