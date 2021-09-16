@@ -29,20 +29,30 @@ export default function AddLineForm(props) {
         className={classes.root}
         noValidate
         autoComplete="off"
-        onSubmit={props.handelLogin}
+        onSubmit={props.handleSubmit}
       >
         <TextField
+          multiline
           id="filled-basic"
-          label="email or username"
+          label="line title"
           variant="filled"
-          onChange={props.handleUserNameChange}
+          onChange={props.handleLineTitleChange}
         />
         <TextField
+          multiline
           id="filled-basic"
-          label="passowrd"
+          label="line body"
           variant="filled"
           type="password"
-          onChange={props.handlePasswordChange}
+          onChange={props.handleLineBodyChange}
+        />
+        <TextField
+          multiline
+          id="filled-basic"
+          label="caregories"
+          variant="filled"
+          type="password"
+          onChange={props.handleCategoriesChange}
         />
         <Button
           type="submit"
@@ -50,7 +60,7 @@ export default function AddLineForm(props) {
           variant="contained"
           color="primary"
         >
-          login
+          submit
         </Button>
       </form>
     </div>

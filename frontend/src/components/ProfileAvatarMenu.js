@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import Avatar from "@material-ui/core/Avatar";
 import MenuItem from "@material-ui/core/MenuItem";
 import { Router, Link, Switch, Route } from "react-router-dom";
-import Profile from "../pages/Profile";
 import { createBrowserHistory } from "history";
 import AddLineModal from "./AddLineModal";
+
+import userService from "../services/user";
+import categoriesService from "../services/categories";
+
 const useStyles = makeStyles((theme) => ({
   avatar: {
     backgroundColor: "transparent",
@@ -18,8 +21,13 @@ export default function SimpleMenu(props) {
   const customHistory = createBrowserHistory();
 
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [addLineModalOpen, setAddLineModalOpen] = React.useState(false);
+  const [categoriesFromApi, setCategoriesFromApi] = useState([]);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [addLineModalOpen, setAddLineModalOpen] = useState(false);
+  const [lineTitle, setLineTitle] = useState("");
+  const [lineBody, setLineBody] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [categoriesID, setCategoriesID] = useState([]);
 
   const handelOpen = () => {
     setAddLineModalOpen(true);
@@ -38,6 +46,47 @@ export default function SimpleMenu(props) {
     setAnchorEl(null);
   };
 
+  const handleLineTitleChange = (e) => {
+    setLineTitle(e.target.value);
+  };
+
+  const handleLineBodyChange = (e) => {
+    setLineBody(e.target.value);
+  };
+
+  const handleCategoriesChange = (e) => {
+    const categoriesAsString = e.target.value;
+    const categoriesAsArray = categoriesAsString.trim().split(/\s*,\s*/g);
+    setCategories(categoriesAsArray);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const categoriesIDList = await Promise.all(
+      categories.map(async (i) => {
+        const category = {
+          categoryName: i,
+        };
+        const postedCategory = await categoriesService.postCategoy(
+          category,
+          props.user.jwt
+        );
+        return postedCategory;
+      })
+    );
+    setCategoriesID(categoriesIDList);
+
+    const line = {
+      title: lineTitle,
+      line: lineBody,
+      users_permissions_user: props.user.user._id,
+      categories: [...categoriesIDList],
+    };
+    const res = await userService.postLine(line, props.user.jwt);
+    if (res.status === 200) {
+      setAddLineModalOpen(false);
+    }
+  };
   return (
     <div>
       <Button
@@ -70,7 +119,14 @@ export default function SimpleMenu(props) {
         </MenuItem>
         <MenuItem onClick={handelOpen}>add new pickup line</MenuItem>
       </Menu>
-      <AddLineModal open={addLineModalOpen} onClose={handleModalClose} />
+      <AddLineModal
+        open={addLineModalOpen}
+        onClose={handleModalClose}
+        handleLineTitleChange={handleLineTitleChange}
+        handleLineBodyChange={handleLineBodyChange}
+        handleCategoriesChange={handleCategoriesChange}
+        handleSubmit={handleSubmit}
+      />
     </div>
   );
 }

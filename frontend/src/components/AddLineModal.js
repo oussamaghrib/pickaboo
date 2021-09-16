@@ -38,9 +38,10 @@ export default function LoginModal(props) {
     >
       <Fade in={props.open}>
         <AddLineForm
-          handelLogin={handelLogin}
-          handleUserNameChange={props.handleUserNameChange}
-          handlePasswordChange={props.handlePasswordChange}
+          handleLineTitleChange={props.handleLineTitleChange}
+          handleLineBodyChange={props.handleLineBodyChange}
+          handleCategoriesChange={props.handleCategoriesChange}
+          handleSubmit={props.handleSubmit}
         />
       </Fade>
     </Modal>
